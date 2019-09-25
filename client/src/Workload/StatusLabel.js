@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDotCircle } from '@fortawesome/free-regular-svg-icons';
 import { faPlayCircle, faQuestionCircle, faCheckCircle, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
+const updateColor = "#66d3e4";
+
 export default class StatusLabel extends React.Component {
   render() {
     let status;
@@ -24,7 +26,7 @@ export default class StatusLabel extends React.Component {
       }
       else if(this.props.kubestate.status === "updating") {
         symbol = faPlayCircle;
-        color = "#66d3e4";
+        color = updateColor;
       }
       else {
         symbol = faQuestionCircle;
@@ -37,11 +39,11 @@ export default class StatusLabel extends React.Component {
     let podsInTransition = this.props.kubestate.rollout.updated - this.props.kubestate.rollout.desired + this.props.kubestate.rollout.outdated;
 
     for (let index = 1; index <= this.props.kubestate.rollout.desired - podsInTransition; index++) {
-      pods.push(<FontAwesomeIcon key={key++} style={{color: "green"}} icon={faDotCircle} />);
+      pods.push(<FontAwesomeIcon key={key++} style={{color: "green", margin: "2px"}} icon={faDotCircle} />);
     }
 
     for (let index = 1; index <= podsInTransition ; index++) {
-      pods.push(<FontAwesomeIcon key={key++} style={{color: "yellow"}} icon={faDotCircle} />);
+      pods.push(<FontAwesomeIcon key={key++} style={{color: updateColor, margin: "2px"}} icon={faDotCircle} />);
     }
     // <div style={{display: "inline-block", backgroundColor: color, width: "80px", fontSize: "12px", color: "white", padding: "6px", borderRadius: "12px"}}>
     //   <i className={symbol}></i>&nbsp;&nbsp;{status}
@@ -54,12 +56,10 @@ export default class StatusLabel extends React.Component {
           <FontAwesomeIcon icon={symbol} />&nbsp;&nbsp;{status}
         </div>
         <div style={{marginTop: "10px", textAlign: "center" }}>
-          <span>
-            {pods.map(pod => 
-              pod
-            )}
-          </span>
-        </div>
+          {pods.map(pod => 
+            pod
+          )}
+      </div>
       </td>
     );
   }

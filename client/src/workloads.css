@@ -74,7 +74,7 @@ button:focus {
 span.deleteicon {
   position: relative;
 }
-span.deleteicon i {
+span.deleteicon svg {
   position: absolute;
   display: block;
   top: 0px;
@@ -199,10 +199,6 @@ span.deleteicon input {
   color: #999;
   /* margin-bottom: 4px; */
   margin-right: 5px;
-}
-
-.flux-operations div {
-  margin: 5px 0;
 }
 
 .flux-operations .active {

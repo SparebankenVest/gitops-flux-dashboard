@@ -1,4 +1,6 @@
 import React, {useState} from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-regular-svg-icons';
 
 const WorkloadFilter = ({workloads, onFilter}) => {
   const [filter, setFilter] = useState("");
@@ -22,7 +24,7 @@ const WorkloadFilter = ({workloads, onFilter}) => {
     if(onFilter) onFilter("");
   }
 
-  let clearButton = filter ? <i className="fa fa-times-circle" onClick={clearFilter}></i> : null;
+  let clearButton = filter ? <FontAwesomeIcon icon={faTimesCircle} onClick={clearFilter} /> : null;
   return (
     <span className="deleteicon">
       <input name="filterBox" value={filter} type="text" placeholder="Start typing to filter workloads" className="filter-input-text" onChange={handleChange}/>

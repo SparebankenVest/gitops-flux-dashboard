@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faEllipsisV } from '@fortawesome/free-solid-svg-icons';
 
 export default class WorkloadContextMenu extends React.Component {
   constructor(props) {
@@ -89,7 +91,7 @@ export default class WorkloadContextMenu extends React.Component {
     return (
       <React.Fragment>
         <td style={{fontSize: "16px", cursor: "pointer"}} onClick={this.showMenu}>
-          <i className="fas fa-ellipsis-v" ></i>
+          <FontAwesomeIcon icon={faEllipsisV} />
           {menu}
         </td>
       </React.Fragment>
