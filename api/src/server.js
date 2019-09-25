@@ -68,7 +68,7 @@ const eventStore = new EventStore({
 const fluxClient = fluxApiClient(fluxApiRoot);
 const dataService = new FluxDataService(fluxPollInterval, messageBroker, fluxPollDiffs, fluxClient);
 
-if(process.env.NODE_ENV === production) {
+if(process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, 'static')));
 }
 
