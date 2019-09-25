@@ -3,9 +3,11 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	appsv1 "k8s.io/api/apps/v1"
@@ -46,18 +48,18 @@ type KubernetesState struct {
 
 type RolloutStatus struct {
 	// Desired number of pods as defined in spec.
-	Desired int32
+	Desired int32 `json:"desired"`
 	// Updated number of pods that are on the desired pod spec.
-	Updated int32
+	Updated int32 `json:"updated"`
 	// Ready number of pods targeted by this deployment.
-	Ready int32
+	Ready int32 `json:"ready"`
 	// Available number of available pods (ready for at least minReadySeconds) targeted by this deployment.
-	Available int32
+	Available int32 `json:"available"`
 	// Outdated number of pods that are on a different pod spec.
-	Outdated int32
+	Outdated int32 `json:"outdated"`
 	// Messages about unexpected rollout progress
 	// if there's a message here, the rollout will not make progress without intervention
-	Messages []string
+	Messages []string `json:"messages"`
 }
 
 type Event struct {
@@ -75,8 +77,27 @@ type EventMessage struct {
 	Event Event
 }
 
+var (
+	masterURL          string
+	kubeconfig         string
+	gitopsDashboardURL string
+)
+
 func main() {
-	config, err := clientcmd.BuildConfigFromFlags("https://openbanking-u-aks-836de33c.hcp.westeurope.azmk8s.io", "/Users/jont/.kube/config")
+	var err error
+
+	gitopsDashboardURL, err = getEnvStr("DASHBOARD_API", "localhost:3000")
+	if err != nil {
+		log.Fatalf("Error parsing env var DASHBOARD_API: %s", err.Error())
+	}
+
+	if err != nil {
+		log.Fatalf("Error parsing env var AZURE_VAULT_MAX_FAILURE_ATTEMPTS: %s", err.Error())
+	}
+
+	// https://openbanking-u-aks-836de33c.hcp.westeurope.azmk8s.io
+	// /Users/jont/.kube/config
+	config, err := clientcmd.BuildConfigFromFlags(masterURL, kubeconfig)
 	if err != nil {
 		panic(err.Error())
 	}
@@ -162,7 +183,7 @@ func createDeploymentInformer(factory informers.SharedInformerFactory) cache.Sha
 
 				fmt.Printf("%s", data)
 
-				res, err := http.Post("http://localhost:8001/api/v1/namespaces/spv-system/services/gitops-flux-agent/proxy/", "application/json", bytes.NewBuffer(data))
+				res, err := http.Post(gitopsDashboardURL, "application/json", bytes.NewBuffer(data))
 				if err != nil {
 					fmt.Println("error: ", err)
 					return
@@ -222,4 +243,16 @@ func createStatefulSetInformer(factory informers.SharedInformerFactory) cache.Sh
 	})
 
 	return informer
+}
+
+func getEnvStr(key string, fallback string) (string, error) {
+	if value, ok := os.LookupEnv(key); ok {
+		return value, nil
+	}
+	return fallback, nil
+}
+
+func init() {
+	flag.StringVar(&kubeconfig, "kubeconfig", "", "Path to a kubeconfig. Only required if out-of-cluster.")
+	flag.StringVar(&masterURL, "master", "", "The address of the Kubernetes API server. Overrides any value in kubeconfig. Only required if out-of-cluster.")
 }

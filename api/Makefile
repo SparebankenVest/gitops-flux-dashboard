@@ -1,9 +1,9 @@
-PACKAGE=github.com/SparebankenVest/gitops-flux-dashboard-daemon
+PACKAGE=github.com/SparebankenVest/gitops-flux-dashboard/api
 
 DOCKER_INTERNAL_REG=dokken.azurecr.io
 DOCKER_RELEASE_REG=spvest
 
-DOCKER_IMAGE=gitops-flux-dashboard-daemon
+DOCKER_IMAGE=gitops-flux-dashboard-api
 
 DOCKER_INTERNAL_TAG := $(shell git rev-parse --short HEAD)
 DOCKER_RELEASE_TAG := $(shell git describe)

@@ -1,0 +1,4 @@
+api/node_modules
+api/dist
+client/build
+client/node_modules
