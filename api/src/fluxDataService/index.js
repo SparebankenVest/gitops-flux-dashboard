@@ -63,7 +63,7 @@ export default class FluxDataService {
     return rawFluxData;
   }
 
-  updateWorkloadWithNewState(id, state, cb) {
+  updateWorkloadWithKubeState(id, state, cb) {
     let index = workloads.findIndex(old => old.id === id);
     if(index > -1) {
       let workload = workloads[index];
