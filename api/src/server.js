@@ -99,6 +99,7 @@ app.post('/', (req, res) => {
           }
 
           if(changes.kubeUpdate) {
+            let kubeUpdate = changes.kubeUpdate;
             dataService.updateWorkloadWithKubeState(kubeUpdate.id, kubeUpdate.state, (err, workload) => {
               if(err) {
                 return debug('%O', err);
