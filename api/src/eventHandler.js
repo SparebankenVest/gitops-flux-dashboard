@@ -59,8 +59,8 @@ const handleEvent = (event, cb) => {
 };
 
 const detectNeededKubernetesUpdates = (event, cb) => {
-  if(event.metadata) {
-    return cb(null, updates(null, {id: event.id, state: event.metadata}));
+  if(event.metadata && event.serviceIDs && event.serviceIDs.length > 0) {
+    return cb(null, updates(null, {id: event.serviceIDs[0], state: event.metadata}));
   }
   cb(null, updated(null, null));
 };
