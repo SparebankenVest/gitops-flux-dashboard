@@ -6,6 +6,7 @@ import ContainerDescription from './ContainerDescription';
 import ContainerImageTagList from './ContainerImageTagList';
 import WorkloadContextMenu from './WorkloadContextMenu';
 import ManualRelease from './ManualRelease';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import superagent from 'superagent';
 
@@ -120,7 +121,7 @@ const Workload = ({workload}) => {
             <tr>
               <td colSpan="3">
                 <h1>
-                  { workload.managedByHelm ? <i><img src="helm.svg" alt="Helm Release" style={{width: "18px", marginBottom: "-3px", marginRight: "4px"}} /></i> : <i className="fas fa-dice-d6" style={{color: "gray", paddingRight: "5px"}}/>} {workload.namespace} / {workload.name}
+                  { workload.managedByHelm ? <i><img src="helm.svg" alt="Helm Release" style={{width: "18px", marginBottom: "-3px", marginRight: "4px"}} /></i> : <FontAwesomeIcon icon="dice-d6" style={{color: "gray", paddingRight: "5px"}}/>} {workload.namespace} / {workload.name}
                 </h1>
                 {helm}
                 <p style={descriptionStyle}>

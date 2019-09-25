@@ -1,5 +1,9 @@
 import React from 'react';
 import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faDocker } from '@fortawesome/free-brands-svg-icons';
+import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 export default class ImageDescription extends React.Component {
   render() {
@@ -11,14 +15,14 @@ export default class ImageDescription extends React.Component {
 
     let filter = null;
     if(container.image.current.tagPolicy) {
-      filter = <p><i style={{color: "gray"}} className="fas fa-filter" /> {container.image.current.tagPolicy}</p>;
+      filter = <p><FontAwesomeIcon icon={faFilter} style={{color: "gray"}} /> {container.image.current.tagPolicy}</p>;
     }
 
     return (
       <td style={{marginBottom: "20px", width: "99%"}} className="image-name" >
-        <p><i style={{color: "gray"}} className="fab fa-docker" /> {container.image.current.id}</p>
+        <p><FontAwesomeIcon style={{color: "gray"}} icon={faDocker} /> {container.image.current.id}</p>
         {filter}
-        <p><i style={{color: "gray"}} className="far fa-clock" /> {moment(container.image.current.createdAt).fromNow()}</p>
+        <p><FontAwesomeIcon style={{color: "gray"}} icon={faClock} /> {moment(container.image.current.createdAt).fromNow()}</p>
       </td>
     );
   }

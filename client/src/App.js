@@ -7,8 +7,11 @@ import ReconnectingWebSocket from 'reconnecting-websocket';
 import superagent from 'superagent';
 import ReactNotification, { store as notificationStore } from 'react-notifications-component'
 import 'react-notifications-component/dist/theme.css'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faCheckSquare, faCoffee, faDiceD6 } from '@fortawesome/free-solid-svg-icons'
 
 let wsClient;
+library.add(faCheckSquare, faCoffee, faDiceD6);
 
 export default class App extends React.Component {
   constructor(props) {
@@ -36,6 +39,9 @@ export default class App extends React.Component {
         let obj = JSON.parse(message.data);
   
         switch(obj.object) {
+          case 'kubestate':
+            console.log(message.data);
+            return this.updatePartialKubeState(obj.state);
           case 'workload':
             console.log(message.data);
             return this.updatePartialState(obj.diffData.new);
@@ -88,6 +94,26 @@ export default class App extends React.Component {
         if(wl.id === data.id) {
           console.log(`Replacing old ${data.id}`);
           return data;
+        }
+        else {
+          return wl;
+        }
+      }); 
+
+      return {workloads: workloads};
+    });
+  }
+
+  updatePartialKubeState(state) {
+    console.log(`Doing partial update of kubestate for workload ${state.id}`);
+
+    this.setState(state => {
+      let workloads = state.workloads.map(wl => {
+        if(wl.id === state.id) {
+          console.log(`Replacing old ${state.id}`);
+          let newWl = JSON.parse(JSON.stringify(wl));
+          newWl.kubernetesState = state;
+          return newWl;
         }
         else {
           return wl;

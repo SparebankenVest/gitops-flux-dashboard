@@ -192,12 +192,13 @@ span.deleteicon input {
   white-space: nowrap;
   font-size: 14px;
   font-weight: lighter;
+  line-height: 25px;
 }
 
-.flux-operations i {
+.flux-operations svg {
   color: #999;
-  margin-bottom: 4px;
-  width: 25px;
+  /* margin-bottom: 4px; */
+  margin-right: 5px;
 }
 
 .flux-operations div {
@@ -208,7 +209,7 @@ span.deleteicon input {
   font-weight: normal;
 }
 
-.flux-operations .active i {
+.flux-operations .active svg {
   color: black;
 }
 
