@@ -40,11 +40,15 @@ const log = createLogger({
 });
 
 const port = process.env['PORT'] || 3001;
-const fluxApiRoot = process.env["FLUX_API_ROOT"] || 'http://localhost:8001/api/v1/namespaces/spv-system/services/spv-flux-gitops:3030/proxy/api/flux';
+const fluxApiRoot = process.env["FLUX_API_ROOT"];
 const maxEvents = process.env["MAX_EVENTS"] ? parseInt(process.env["MAX_EVENTS"]) : 500;
 const fluxPollInterval = process.env["FLUX_POLL_INTERVAL"] ? parseInt(process.env["FLUX_POLL_INTERVAL"]) : 320;
 const fluxMaxDataSize = process.env["FLUX_MAX_DATA_SIZE"] ? parseInt(process.env["FLUX_MAX_DATA_SIZE"]) : 5;
 const fluxPollDiffs = process.env["FLUX_POLL_DIFFS"] ? parseInt(process.env["FLUX_POLL_DIFFS"]) : false;
+
+if(!fluxApiClient) {
+  throw('FLUX_API_ROOT is required');
+}
 
 console.log('Env values:');
 console.log(`  PORT               = ${port}`);
