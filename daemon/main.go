@@ -83,6 +83,7 @@ var (
 	gitopsDashboardURL string
 )
 
+// Please remove me
 func main() {
 	var err error
 
