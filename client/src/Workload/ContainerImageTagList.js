@@ -25,7 +25,7 @@ export default class ContainerImageTagList extends React.Component {
 
     if(container.image.newer.length > 2) {
       imageHistory.push(container.image.newer.slice(0, 1).map(newer => <p key={newer.id}><FontAwesomeIcon style={{width: arrowWidth}} icon={faLongArrowAltDown} /> {this.formatTag(newer.tag)}</p>));    
-      imageHistory.push(<p key={container.image.current.id + '-con'} style={{color: "#888", padding: "3px 0 3px 0"}}><FontAwesomeIcon style={{width: arrowWidth}} icon={faLongArrowAltDown} />...</p>);  
+      imageHistory.push(<p key={container.image.current.id + '-con'} style={{color: "#888", padding: "3px 0 3px 0"}}><FontAwesomeIcon style={{width: arrowWidth}} icon={faLongArrowAltDown} /> ...</p>);  
     }
     else {
       imageHistory.push(container.image.newer.slice(0, container.image.newer.length).map(newer => <p key={newer.id}><FontAwesomeIcon style={{width: arrowWidth}} icon={faLongArrowAltDown} /> {this.formatTag(newer.tag)}</p>));      
