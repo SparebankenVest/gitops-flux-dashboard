@@ -129,12 +129,9 @@ function filterNewerImages(current, available) {
     return [];
   }
 
-  let counter = 0;
-  for (let index = 0; index < available.length; index++) {
-    const element = available[index];
-    if(element.ID === current.ID) {
-      return available.slice(0, index);
-    }
+  let index = available.findIndex(img => img.id === current.ID);
+  if(index > 0) {
+    return available.slice(0, index);
   }
   return [];
 }
